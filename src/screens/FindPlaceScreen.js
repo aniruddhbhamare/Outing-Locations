@@ -3,6 +3,7 @@ import { View,Text,TouchableOpacity,StyleSheet,Animated} from 'react-native';
 import { connect } from 'react-redux';
 import PlaceList from '../../src/components/PlaceList';
 
+import {getPlaces} from '../store/actions/index';
 
 class FindPlaceScreen extends Component{
 
@@ -20,6 +21,9 @@ class FindPlaceScreen extends Component{
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
     }
 
+    componentDidMount(){
+        this.props.onLoadPlaces();
+    }
     onNavigatorEvent = event =>{
         if(event.type === "NavBarButtonPress"){
             if(event.id === "sideDrawerToggle"){
@@ -113,7 +117,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = state =>{
     return{
         places:state.places.places
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps)(FindPlaceScreen);
+const mapDispatchToProps = dispatch =>{
+    return {
+        onLoadPlaces:() =>dispatch(getPlaces())
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(FindPlaceScreen);

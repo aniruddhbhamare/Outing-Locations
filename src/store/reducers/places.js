@@ -1,4 +1,4 @@
-import { ADD_PLACE,DELETE_PLACE,} from '../actions/actionTypes';
+import { ADD_PLACE,DELETE_PLACE,SET_PLACES} from '../actions/actionTypes';
 //,SELECT_PLACE,DESELECT_PLACE
 import placeImage from '../../assets/img.jpeg';
 
@@ -24,6 +24,13 @@ const reducer = (state=initialState ,action) =>{
                 // }
             })    
         };
+        case SET_PLACES:
+        return{
+            ...state,
+            places:action.places
+        };
+
+
 
         case DELETE_PLACE:
         return{

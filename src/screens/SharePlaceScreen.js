@@ -1,5 +1,5 @@
 import React ,{Component} from 'react';
-import { View,Text,Button,StyleSheet,Image,ScrollView} from 'react-native';
+import { View,Text,Button,StyleSheet,Image,ScrollView,ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 import {addPlace} from '../store/actions/index';
 
@@ -99,6 +99,16 @@ class SharePlaceScreen extends Component{
         });
     }
     render(){
+        let submitButton = (
+            <Button 
+                title="Share The Place" 
+                onPress={this.placeAddedHandler}
+                disabled={!this.state.controls.placeName.valid || !this.state.controls.location.valid || !this.state.controls.location.valid}/>
+        );
+
+        if(this.props.isLoading){
+          submitButton=<ActivityIndicator color="#7b1fa2" />
+        }
         return(
             <ScrollView >
             <View style={styles.container}>
@@ -111,10 +121,7 @@ class SharePlaceScreen extends Component{
                  placeData={this.state.controls.placeName}
                  onChangeText={this.onChangeTextHandler}/>
                 <View style={styles.button}>
-                    <Button 
-                        title="Share The Place" 
-                        onPress={this.placeAddedHandler}
-                        disabled={!this.state.controls.placeName.valid || !this.state.controls.location.valid || !this.state.controls.location.valid}/>
+                    {submitButton}
                 </View>
             </View>
            </ScrollView>     
@@ -143,9 +150,15 @@ class SharePlaceScreen extends Component{
         }
     }); 
 
+    const mapStateToProps = state =>{
+        return{
+            isLoading:state.ui.isLoading
+        }
+    }
+
     const mapDispatchToProps = dispatch =>{
         return{
             onPlaceAdd:(placeName,location,image) =>dispatch(addPlace(placeName,location,image))
         };
     };
-export default connect(null,mapDispatchToProps)(SharePlaceScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(SharePlaceScreen);
