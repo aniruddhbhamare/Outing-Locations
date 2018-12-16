@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import {View,StyleSheet,ImageBackground ,Dimensions,KeyboardAvoidingView,Keyboard ,TouchableWithoutFeedback} from 'react-native';
+import {View,StyleSheet,ImageBackground ,Dimensions,KeyboardAvoidingView,Keyboard ,TouchableWithoutFeedback,ActivityIndicator} from 'react-native';
 import mainTabScreen from './mainTabScreen';
 
 import DefaultTextInput from '../components/UI/DefaulTextInput';
@@ -12,7 +12,7 @@ import ButtonWithBackground from '../components/UI/ButtonWithBackground';
 import validate from '../utilities/validation';
 
 import { connect } from 'react-redux';
-import { tryAuth} from '../store/actions/index';
+import { tryAuth ,authAutoSignIn} from '../store/actions/index';
 class AuthScreen extends Component{
     state = { 
         viewMode:Dimensions.get('window').height > 500 ? 'portrait' : 'landscape',
@@ -53,6 +53,10 @@ class AuthScreen extends Component{
         Dimensions.removeEventListener('change',this.updateStyle);
     }
 
+    componentDidMount(){
+        this.props.onAuthAutoSignIn();
+    }
+
     switchAuthModeHandler= () =>{
         this.setState((prevState)=>{
             return{
@@ -68,7 +72,7 @@ class AuthScreen extends Component{
     }
 
     onChangeTextHandler=(key,value)=>{
-        let connectedValue = {  };
+        let connectedValue = {};
 
         if(this.state.controls[key].validationRules.equalTo){
             const equalControl = this.state.controls[key].validationRules.equalTo;
@@ -109,19 +113,29 @@ class AuthScreen extends Component{
         })
     }
 
-    loginHandler =() =>{
+    authHandler =() =>{
         const authData ={
             email:this.state.controls.email.value,
-            passowrd:this.state.controls.password.value,
-            confirmPassowrd:this.state.controls.confirmPassword.value,
+            password:this.state.controls.password.value,
+            confirmPassword:this.state.controls.confirmPassword.value,
         }
-        this.props.onLogin(authData);
-        return mainTabScreen()
+        this.props.onTryAuth(authData,this.state.authMode);
+       
     };
 
     render(){
         let textHeader = null;
         let confirmPassowrdControl = null;
+        let submitButton = (
+            <ButtonWithBackground 
+                    color="#7b1fa2" 
+                    onPress={this.authHandler}
+                    disabled={
+                        !this.state.controls.email.valid ||
+                        !this.state.controls.password.valid ||
+                        !this.state.controls.confirmPassword.valid && this.state.authMode === "signup"}
+                >Submit</ButtonWithBackground>
+        );
 
         if(this.state.authMode === "signup"){
             confirmPassowrdControl=(
@@ -148,6 +162,12 @@ class AuthScreen extends Component{
                 </MainText>
             );
         }
+
+
+        if(this.props.isLoading){
+            submitButton =(<ActivityIndicator size={"large"} color="#7b1fa2" />);
+        }
+
         return(
             <ImageBackground source={backgroundImg} style={styles.imagBack}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -195,16 +215,7 @@ class AuthScreen extends Component{
                      </View>
                  </View>    
                </TouchableWithoutFeedback>
-                     
-                <ButtonWithBackground 
-                    color="#7b1fa2" 
-                    onPress={this.loginHandler}
-                    disabled={
-                        !this.state.controls.email.valid ||
-                        !this.state.controls.password.valid ||
-                        !this.state.controls.confirmPassword.valid && this.state.authMode === "signup"}
-                >Submit</ButtonWithBackground>
-
+                     {submitButton}
                 </KeyboardAvoidingView>
             </ImageBackground>
             
@@ -260,9 +271,16 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = state =>{
+    return{
+        isLoading:state.ui.isLoading
+    };
+}
+
 const mapDispatchToProps = (dispatch)=>{
     return{
-        onLogin:(authData)=>dispatch(tryAuth(authData))
+        onTryAuth:(authData,authMode)=>dispatch(tryAuth(authData,authMode)),
+        onAuthAutoSignIn:()=>dispatch(authAutoSignIn())
     }
 };
-export default connect(null,mapDispatchToProps)(AuthScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(AuthScreen);

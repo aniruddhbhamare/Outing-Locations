@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
        alignItems: 'center',
     },
     placeholder:{
-        backgroundColor:"#Ce93d8",
+        backgroundColor:"#F3E5F5",
         borderWidth: 1,
         width:"100%",
         height:250,

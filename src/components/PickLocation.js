@@ -65,6 +65,7 @@ class PickLocation extends React.Component {
 
         return(
             <View style={styles.container}>
+            <View style={{ borderWidth: 1,width:'100%'}}>
                <MapView 
                  initialRegion={this.state.focusedLocation}
                 //region={this.state.focusedLocation}
@@ -72,7 +73,7 @@ class PickLocation extends React.Component {
                 onPress={this.pickLocationHandler}
                 ref={ref => this.map = ref}
                 >{marker}</MapView>
-
+            </View>
                 <View style={styles.button}>
                     <Button title="Locate Me" onPress={this.getLocationHandler}/>
                 </View>
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     container:{
        width:"100%",
        alignItems: 'center',
+      
     },
     map:{
        width:"100%",

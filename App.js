@@ -14,9 +14,10 @@ Navigation.registerComponent("awesome-places.AuthScreen" ,()=>AuthScreen,store,P
 Navigation.registerComponent("awesome-places.FindPlaceScreen",()=>FindPlaceScreen,store,Provider);
 Navigation.registerComponent("awesome-places.SharePlaceScreen",()=>SharePlaceScreen,store,Provider);
 Navigation.registerComponent("awesome-Places.PlaceDetailScreen",()=>PlaceDetailScreen,store,Provider);
-Navigation.registerComponent("awesome-places.SideDrawerScreen",()=>SideDrawerScreen);
+Navigation.registerComponent("awesome-places.SideDrawerScreen",()=>SideDrawerScreen,store,Provider);
 //Start The App
-Navigation.startSingleScreenApp({
+
+export default () => Navigation.startSingleScreenApp({
   screen:{
     screen:"awesome-places.AuthScreen",
     title:"Login"
