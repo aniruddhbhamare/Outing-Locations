@@ -1,14 +1,26 @@
 import React from 'react';
 import {View,Image,Button,StyleSheet} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import defaultImage from '../assets/defaultImage.jpg'
 
 class PickImage extends React.Component {
     state={
         pickedImage:null
     }
 
+    // componentWillMount(){
+    //     this.setState({
+    //         pickedImage:defaultImage
+    //     })
+    // }
+    reset = () =>{
+        this.setState({
+            pickedImage:null
+        });
+    }
+
     pickedImageHandler=()=>{
-        ImagePicker.showImagePicker({title:"Pick the Image"},res=>{
+        ImagePicker.showImagePicker({title:"Pick the Image",maxWidth:800,maxHeight:600},res=>{
             if(res.didCancel){
                 console.log("User Canclled !");
             } else if(res.error){

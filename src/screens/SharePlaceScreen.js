@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import { View,Text,Button,StyleSheet,Image,ScrollView,ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
-import {addPlace} from '../store/actions/index';
+import {addPlace,startAddPlaces } from '../store/actions/index';
 
 import MainText from '../components/UI/MainText';
 import TextHeader from '../components/UI/TextHeader';
@@ -9,39 +9,61 @@ import PlaceInput from '../../src/components/PlaceInput';
 import PickImage from '../components/PickImage';
 import PickLocation from '../components/PickLocation';
 import validate from '../utilities/validation';
+import { reset } from 'ansi-colors';
 
 class SharePlaceScreen extends Component{
+   
     static navigatorStyle={
         navBarButtonColor:"#7b1fa2"
     }
 
-   state={
-       controls:{
-           placeName:{
-                value:"",
-                valid:false,
-                touched:false,
-                validationRules:{
-                    notEmpty:true
+    componentWillMount(){
+      this.reset();
+    }
+
+
+    reset =() =>{
+        this.setState({
+            controls:{
+                placeName:{
+                     value:"",
+                     valid:false,
+                     touched:false,
+                     validationRules:{
+                         notEmpty:true
+                     }
+                },
+                location:{
+                    value:null,
+                    valid:false
+                },
+                image:{
+                    value:null,
+                    valid:false
                 }
-           },
-           location:{
-               value:null,
-               valid:false
-           },
-           image:{
-               value:null,
-               valid:false
-           }
-       }
-   };
+            }
+        });
+    }
 
     constructor(props){
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
     }
 
+    componentDidUpdate(){
+        if(this.props.placeAdded){
+            this.props.navigator.switchToTab({tabIndex:0});
+           // this.props.navigator.onStartAddPlace();
+        }
+    };
+
+    
     onNavigatorEvent = event =>{
+        if(event.type === "ScreenChangedEvent"){
+            if(event.id === "willAppear") {
+                this.props.onStartAddPlace();
+            }
+        }
         if(event.type === "NavBarButtonPress"){
             if(event.id === "sideDrawerToggle"){
                 this.props.navigator.toggleDrawer({
@@ -69,6 +91,9 @@ class SharePlaceScreen extends Component{
 
     placeAddedHandler =()=>{
         this.props.onPlaceAdd(this.state.controls.placeName.value,this.state.controls.location.value,this.state.controls.image.value);
+        this.reset();
+        this.imagePicker.reset();
+        this.mapPicker.reset();
     }
    
     locationPickedHandler = location =>{
@@ -107,15 +132,21 @@ class SharePlaceScreen extends Component{
         );
 
         if(this.props.isLoading){
-          submitButton=<ActivityIndicator color="#7b1fa2" />
+          submitButton=<ActivityIndicator size={"large"} color="#7b1fa2" />
         }
         return(
             <ScrollView >
             <View style={styles.container}>
               <MainText> <TextHeader>Share a Place with us!</TextHeader></MainText>
           
-                    <PickImage onImagePicked={this.imagePickedHandler}/>  
-                    <PickLocation onLocationPick={this.locationPickedHandler}/>
+                    <PickImage 
+                        onImagePicked={this.imagePickedHandler}
+                        ref={ref=>this.imagePicker = ref}
+                        />  
+                    <PickLocation 
+                        onLocationPick={this.locationPickedHandler}
+                        ref={ref => this.mapPicker=ref}
+                        />
 
                <PlaceInput 
                  placeData={this.state.controls.placeName}
@@ -152,13 +183,16 @@ class SharePlaceScreen extends Component{
 
     const mapStateToProps = state =>{
         return{
-            isLoading:state.ui.isLoading
+            isLoading:state.ui.isLoading,
+            placeAdded:state.places.placeAdded
         }
     }
 
     const mapDispatchToProps = dispatch =>{
         return{
-            onPlaceAdd:(placeName,location,image) =>dispatch(addPlace(placeName,location,image))
+            onPlaceAdd:(placeName,location,image) =>dispatch(addPlace(placeName,location,image)),
+            onStartAddPlace:() => dispatch(startAddPlaces())
+
         };
     };
 export default connect(mapStateToProps,mapDispatchToProps)(SharePlaceScreen);

@@ -1189,6 +1189,8 @@ int layout support_simple_spinner_dropdown_item 0x7f0a0046
 int menu search_item 0x7f0b0000
 int menu stub 0x7f0b0001
 int mipmap ic_launcher 0x7f0c0000
+int mipmap ic_launcher_foreground 0x7f0c0001
+int mipmap ic_launcher_round 0x7f0c0002
 int raw amu_ballon_gx_prefix 0x7f0d0000
 int raw amu_basic_folder 0x7f0d0001
 int raw amu_basic_placemark 0x7f0d0002

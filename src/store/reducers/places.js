@@ -1,9 +1,10 @@
-import { ADD_PLACE,DELETE_PLACE,SET_PLACES} from '../actions/actionTypes';
+import { ADD_PLACE,DELETE_PLACE,SET_PLACES,PLACE_ADDED,START_ADD_PLACE} from '../actions/actionTypes';
 //,SELECT_PLACE,DESELECT_PLACE
 import placeImage from '../../assets/img.jpeg';
 
 const initialState = {
-        places: []
+        places: [],
+        placeAdded:false
 };
 
 const reducer = (state=initialState ,action) =>{
@@ -24,6 +25,18 @@ const reducer = (state=initialState ,action) =>{
                 // }
             })    
         };
+        case PLACE_ADDED:
+        return{
+            ...state,
+            placeAdded:true
+        };
+
+        case START_ADD_PLACE:
+        return{
+            ...state,
+            placeAdded:false
+        };
+
         case SET_PLACES:
         return{
             ...state,

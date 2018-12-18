@@ -14,6 +14,19 @@ class PickLocation extends React.Component {
        locationChosen:false
    }
 
+
+   reset = () =>{
+       this.setState({
+        focusedLocation:{
+            latitude:18.5165,
+            longitude:73.8561,
+            latitudeDelta:0.0122,
+            longitudeDelta:Dimensions.get("window").width / Dimensions.get("window").height * 0.0122,
+        },
+        locationChosen:false
+       });
+   }
+
    pickLocationHandler = event=>{
        const coords = event.nativeEvent.coordinate;
         this.map.animateToRegion({
@@ -68,7 +81,7 @@ class PickLocation extends React.Component {
             <View style={{ borderWidth: 1,width:'100%'}}>
                <MapView 
                  initialRegion={this.state.focusedLocation}
-                //region={this.state.focusedLocation}
+                region={!this.state.locationChosen ? this.state.focusedLocation : null}
                 style={styles.map} 
                 onPress={this.pickLocationHandler}
                 ref={ref => this.map = ref}
