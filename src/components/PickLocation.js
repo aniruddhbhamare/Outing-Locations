@@ -78,7 +78,7 @@ class PickLocation extends React.Component {
 
         return(
             <View style={styles.container}>
-            <View style={{ borderWidth: 1,width:'100%' ,borderColor:"#7b1fa2",}} >
+            <View style={{ borderWidth: 1,width:'100%',borderColor:"#7b1fa2",}} >
                <MapView 
                  initialRegion={this.state.focusedLocation}
                 region={!this.state.locationChosen ? this.state.focusedLocation : null}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     map:{
        width:"100%",
-       height:250
+       height:250,
     },
     button:{
         margin:10

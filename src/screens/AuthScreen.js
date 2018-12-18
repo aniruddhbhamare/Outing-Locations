@@ -155,13 +155,13 @@ class AuthScreen extends Component{
             );
         }
 
-        if (this.state.viewMode === "portrait"){
-            textHeader = (  
-                <MainText>
-                     <TextHeader > Please Log In </TextHeader>
-                </MainText>
-            );
-        }
+        // if (this.state.viewMode === "portrait"){
+        //     textHeader = (  
+        //         <MainText>
+        //              <TextHeader > Please Log In </TextHeader>
+        //         </MainText>
+        //     );
+        // }
 
 
         if(this.props.isLoading){
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         flex:1,
     },
     headerWrapper:{
-        marginBottom:40,
+       // marginBottom:40,
     },
     //1st method but partially responsive
 
