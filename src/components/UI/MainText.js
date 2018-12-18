@@ -7,7 +7,8 @@ const mainText = props => (
 
 const styles=StyleSheet.create({
     mainText:{
-        color:"black"
+        color:"#7b1fa2",
+        margin: 20,
     }
 });
 export default mainText;

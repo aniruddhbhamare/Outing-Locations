@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Button,StyleSheet,Dimensions} from 'react-native';
-
+import ButtonWithBackground from '../components/UI/ButtonWithBackground';
 import MapView from 'react-native-maps';
 
 class PickLocation extends React.Component {
@@ -78,7 +78,7 @@ class PickLocation extends React.Component {
 
         return(
             <View style={styles.container}>
-            <View style={{ borderWidth: 1,width:'100%'}}>
+            <View style={{ borderWidth: 1,width:'100%' ,borderColor:"#7b1fa2",}} >
                <MapView 
                  initialRegion={this.state.focusedLocation}
                 region={!this.state.locationChosen ? this.state.focusedLocation : null}
@@ -88,7 +88,10 @@ class PickLocation extends React.Component {
                 >{marker}</MapView>
             </View>
                 <View style={styles.button}>
-                    <Button title="Locate Me" onPress={this.getLocationHandler}/>
+                    <ButtonWithBackground 
+                        color="#7b1fa2" 
+                        onPress={this.getLocationHandler}
+                    >Locate Me</ButtonWithBackground>
                 </View>
             </View>
         );

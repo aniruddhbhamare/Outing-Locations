@@ -9,6 +9,7 @@ const PlaceInput =props=>(
         value={props.placeData.value}
         valid={props.placeData.valid}
         touched={props.placeData.touched}
+        style={props.style}
        />
     );
 

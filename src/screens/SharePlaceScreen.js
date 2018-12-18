@@ -10,6 +10,7 @@ import PickImage from '../components/PickImage';
 import PickLocation from '../components/PickLocation';
 import validate from '../utilities/validation';
 import { reset } from 'ansi-colors';
+import  ButtonWithBackground from '../components/UI/ButtonWithBackground';
 
 class SharePlaceScreen extends Component{
    
@@ -125,10 +126,11 @@ class SharePlaceScreen extends Component{
     }
     render(){
         let submitButton = (
-            <Button 
-                title="Share The Place" 
+            <ButtonWithBackground  
+                color="#7b1fa2" 
                 onPress={this.placeAddedHandler}
-                disabled={!this.state.controls.placeName.valid || !this.state.controls.location.valid || !this.state.controls.location.valid}/>
+                disabled={!this.state.controls.placeName.valid || !this.state.controls.location.valid || !this.state.controls.location.valid}
+                >Share the Place</ButtonWithBackground>
         );
 
         if(this.props.isLoading){
@@ -137,7 +139,9 @@ class SharePlaceScreen extends Component{
         return(
             <ScrollView >
             <View style={styles.container}>
-              <MainText> <TextHeader>Share a Place with us!</TextHeader></MainText>
+              <MainText> 
+                <TextHeader >Share a Place with us !</TextHeader>
+              </MainText>
           
                     <PickImage 
                         onImagePicked={this.imagePickedHandler}
@@ -149,6 +153,7 @@ class SharePlaceScreen extends Component{
                         />
 
                <PlaceInput 
+                 style={styles.placeInput}
                  placeData={this.state.controls.placeName}
                  onChangeText={this.onChangeTextHandler}/>
                 <View style={styles.button}>
@@ -169,6 +174,7 @@ class SharePlaceScreen extends Component{
         placeholder:{
             backgroundColor:"#eee",
             borderWidth: 1,
+            borderColor: "#7b1fa2",
             width:"80%",
             height:150,
         },
@@ -178,6 +184,9 @@ class SharePlaceScreen extends Component{
         previewImg:{
             width:"100%",
             height:"100%"
+        },
+        placeInput:{
+            borderColor:"#7b1fa2",
         }
     }); 
 

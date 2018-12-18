@@ -7,7 +7,7 @@ const textHeader =props=>(
 
 const styles = StyleSheet.create({
     textHeader:{
-        fontSize:28,
+        fontSize:22,
         fontWeight:"bold",
     },
 });
