@@ -45,6 +45,7 @@ class PlaceDetailScreen extends Component {
           <View style={styles.placeDetailContainer}>
             <View style={styles.subContainer}>
               <Image
+                resizeMode="cover"
                 source={this.props.selectedPlace.image}
                 style={styles.placeImage}
               />
@@ -75,17 +76,7 @@ class PlaceDetailScreen extends Component {
                 {this.props.selectedPlace.name}
               </Text>
             </View>
-            <View>
-              <TouchableOpacity onPress={this.onItemDeletedHandler}>
-                <View style={styles.deleteButton}>
-                  <Icon
-                    size={30}
-                    name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-                    color="red"
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
+           
           </View>
         </View>
     </View>
@@ -93,6 +84,17 @@ class PlaceDetailScreen extends Component {
     }
   }
   
+  //lone 79 <View>
+//   <TouchableOpacity onPress={this.onItemDeletedHandler}>
+//   <View style={styles.deleteButton}>
+//     <Icon
+//       size={30}
+//       name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+//       color="red"
+//     />
+//   </View>
+// </TouchableOpacity>
+//</View>
   const styles = StyleSheet.create({
     container: {
       margin: 22,

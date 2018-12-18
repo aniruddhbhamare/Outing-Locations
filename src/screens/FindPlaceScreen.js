@@ -106,16 +106,19 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     searchButton:{
-        borderWidth: 3,
-        borderRadius: 50,
-        borderColor: '#7b1fa2',
+        //borderWidth: 2,
+        borderRadius: 30,
+        width:180,
+        //borderColor: '#CE93D8',
+        backgroundColor:"#7b1fa2",
         padding:10,
         
     },
     searchButtonText:{
-        color:'#7b1fa2',
+        color:'#fff',
         fontWeight: 'bold',
         fontSize:26,
+        textAlign:'center'
     }
 });
 

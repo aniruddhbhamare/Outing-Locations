@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {View,Text,Dimensions,StyleSheet,TouchableOpacity,Platform,AsyncStorage} from 'react-native';
+import {View,Text,Dimensions,StyleSheet,TouchableOpacity,Platform,Image,AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import App from '../../App';
 import {authLogOut} from '../store/actions/index';
 import { connect } from 'react-redux';
+import logo from '../assets/logoPng.png';
 class SideDrawerScreen extends Component {
 
 
@@ -12,7 +13,8 @@ class SideDrawerScreen extends Component {
         return(
             <View  style={[styles.container,{width:Dimensions.get("window").width * 0.8}]}>
                <View style={styles.headerContainer}>
-                <Text style={styles.sideDrawerHeader}>Awesome Places</Text>
+                    <Image resizeMode="cover" source={logo} style={styles.logo}/>
+                    <Text style={styles.sideDrawerHeader}>Beautiful Places</Text>
                </View>
                 <TouchableOpacity onPress={this.props.onLogOut}>
                     <View style={styles.drawerItem}>
@@ -29,19 +31,23 @@ class SideDrawerScreen extends Component {
 
 const styles = StyleSheet.create({
     container:{
-       
         backgroundColor: "#fff",
         height:"100%",
     },
     sideDrawerHeader:{
         textAlign:"center",
-        fontSize:22,
+        fontSize:30,
         fontWeight:"bold",
         color:"#fff"
     },
+    logo:{
+        height:200,
+        width:200
+    },
     headerContainer:{
+        alignItems:'center',
         justifyContent: 'center',
-        height:"13%",
+        height:"70%",
         backgroundColor:"#7b1fa2",
         marginBottom: 10,
     },

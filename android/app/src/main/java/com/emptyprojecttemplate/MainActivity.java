@@ -21,11 +21,11 @@ public class MainActivity extends SplashActivity {
         LinearLayout view = new LinearLayout(this);
         TextView textView = new TextView(this);
         
-        view.setBackgroundColor(Color.parseColor("#BA68C8"));
+        view.setBackgroundColor(Color.parseColor("#7b1fa2"));
         view.setGravity(Gravity.CENTER);
 
         textView.setTextColor(Color.parseColor("#ffffff"));
-        textView.setText("Beautiful   Places" );
+        textView.setText("Beautiful Places" );
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,55);
 
