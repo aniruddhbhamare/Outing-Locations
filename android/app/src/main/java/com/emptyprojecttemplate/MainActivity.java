@@ -28,10 +28,6 @@ public class MainActivity extends SplashActivity {
         textView.setText("Beautiful Places" );
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,55);
-
-        // textView.setTextColor(Color.parseColor("#ffffff"));
-        // textView.setText("Places");
-        // textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,50);
         
         view.addView(textView);
         return view;

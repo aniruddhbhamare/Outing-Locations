@@ -1,5 +1,5 @@
 import {AsyncStorage} from 'react-native';
-import { TRY_AUTH ,AUTH_SET_TOKEN,AUTH_REMOVE_TOKEN} from "./actionTypes";
+import { TRY_AUTH ,AUTH_SET_TOKEN,AUTH_REMOVE_TOKEN, LOGIN_EMAIL} from "./actionTypes";
 import {uiStartLoading,uiStopLoading} from './index';
 import MainTabScreen from '../../screens/mainTabScreen';
 import AuthScreen from '../../screens/AuthScreen';
@@ -44,7 +44,8 @@ export const tryAuth =(authData,authMode)=>{
                 if(!parsedRes.idToken){
                     alert("Authentication Failed, Email or Password are invalid! ");
                 }else{
-                    dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn,parsedRes.refreshToken));
+                    dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn,parsedRes.refreshToken));               
+                    dispatch(drawerEmail(parsedRes.email));
                     MainTabScreen();
                 }
                 // if(parsedRes.error.message === "EMAIL_EXISTS"){
@@ -94,6 +95,44 @@ export const authSetToken =(token,expiryDate)=>{
     };
 };
 
+export const drawerEmail= (email)=>{
+  return dispatch =>{
+    AsyncStorage.setItem("ap:email:email", email);
+    dispatch(loginEmail(email));
+  };
+};
+  
+export const isMail = () =>{
+  return (dispatch, getState) => {
+            const promise = new Promise((resolve, reject) => {
+              const email = getState().auth.email;
+                if (!email ) {
+                  let fetchedEmail;
+                  AsyncStorage.getItem("ap:email:email")
+                    .catch(err => reject())
+                    .then(emailFromStorage => {
+                      fetchedEmail = emailFromStorage
+                      dispatch(loginEmail(fetchedEmail));
+                    if (!emailFromStorage) {
+                      reject();
+                      return;
+                    }
+                   
+                  })
+              } 
+            })
+          }
+        }
+
+  
+  
+
+export const loginEmail =(email)=>{
+  return{
+    type:LOGIN_EMAIL,
+    email:email
+  };
+};
 // export const authGetToken = () =>{
 //     return (dispatch,getState) => {
 //         const promise = new Promise((resolve,reject)=>{
@@ -209,6 +248,7 @@ export const authGetToken = () => {
 
 export const authAutoSignIn = () =>{
     return dispatch =>{
+      dispatch(isMail());
         dispatch(authGetToken())
         .then(token =>{
             MainTabScreen();
@@ -221,6 +261,7 @@ export const authClearStorage = () => {
     return dispatch =>{
         AsyncStorage.removeItem("ap:auth:token")
         AsyncStorage.removeItem("ap:auth:expiryDate");
+
        return AsyncStorage.removeItem("ap:auth:refreshToken");
     }
 }
@@ -228,6 +269,7 @@ export const authClearStorage = () => {
 
 export const authLogOut = () => {
     return dispatch => {
+    AsyncStorage.removeItem("ap:email:email");
       dispatch(authClearStorage()).then(() => {
         App();
       });

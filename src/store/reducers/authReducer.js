@@ -1,8 +1,9 @@
-import {AUTH_SET_TOKEN,AUTH_REMOVE_TOKEN} from '../../store/actions/actionTypes';
+import {AUTH_SET_TOKEN,AUTH_REMOVE_TOKEN,LOGIN_EMAIL} from '../../store/actions/actionTypes';
 
 const initialState= {
     token:null,
-    expiryDate:null
+    expiryDate:null,
+    email:""
 };
 
 const authReducer=(state=initialState, action) => {
@@ -19,6 +20,11 @@ const authReducer=(state=initialState, action) => {
              token:null ,
              expiryDate:null      
 
+        };
+        case LOGIN_EMAIL:
+        return{
+            ...state,
+            email:action.email
         };
 
         default:

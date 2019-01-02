@@ -1,4 +1,4 @@
-import {ADD_PLACE,DELETE_PLACE,SET_PLACES,PLACE_ADDED,START_ADD_PLACE} from './actionTypes';
+import {ADD_PLACE,REMOVE_PLACE,SET_PLACES,PLACE_ADDED,START_ADD_PLACE} from './actionTypes';
 //SELECT_PLACE,DESELECT_PLACE
 
 import {uiStartLoading,uiStopLoading,authGetToken} from './index';
@@ -114,13 +114,34 @@ export const setPlaces = (places) =>{
     };
 };
 
+export const deletePlace = (key) => {
+    return dispatch => {
+        dispatch(removePlace(key));
+
+        fetch("https://places-72147.firebaseio.com/places/"+ key +".json", {
+            method:"DELETE"
+        })
+        .catch(err => {
+            alert("Something went wrong, sorry :/");
+            console.log(err);
+        })
+        .then(res => {
+            res.json()
+            
+            console.log(res.json());
+        })
+        .then(parsedRes => {
+            alert("Place Deleted!");
+        });
+       
+    };
+};
 
 
 
-
-export const deletePlace = (key) =>{
+export const removePlace = (key) =>{
     return{
-        type:DELETE_PLACE,
+        type:REMOVE_PLACE,
         selectPlace:key
     };
 };

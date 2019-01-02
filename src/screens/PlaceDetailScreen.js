@@ -33,6 +33,25 @@ class PlaceDetailScreen extends Component {
     };
   
     render() {
+      
+      let deleteButton = (
+        <View>
+        <Text>  </Text>
+        </View>
+      );
+
+      if( this.props.onUserLogin === "admin@admin.com"){
+       deleteButton =( <TouchableOpacity onPress={this.onItemDeletedHandler}>
+                 <View style={styles.deleteButton}>
+                   <Icon
+                     size={30}
+                     name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+                     color="red"
+                   />
+                 </View>
+               </TouchableOpacity>)
+      };
+
       return (
         <View
           style={[
@@ -75,7 +94,11 @@ class PlaceDetailScreen extends Component {
               <Text style={styles.placeName}>
                 {this.props.selectedPlace.name}
               </Text>
+              <View>
+                {deleteButton}
+              </View>
             </View>
+               
            
           </View>
         </View>
@@ -201,12 +224,17 @@ class PlaceDetailScreen extends Component {
 //     }
 // }); 
 
+const mapStateToProps =state =>{
+  return{
+      onUserLogin:state.auth.email
+  }
+}
 const mapDispatchToProps = dispatch =>{
     return{
         onPlaceDeleted :key=>dispatch(deletePlace(key))
     };
 }
-export default connect(null,mapDispatchToProps)(PlaceDetailScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(PlaceDetailScreen);
 
 
 // //working with responsive style
