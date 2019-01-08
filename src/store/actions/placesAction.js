@@ -114,28 +114,28 @@ export const setPlaces = (places) =>{
     };
 };
 
-export const deletePlace = (key) => {
-    return dispatch => {
-        dispatch(removePlace(key));
+// export const deletePlace = (key) => {
+//     return dispatch => {
+//         dispatch(removePlace(key));
 
-        fetch("https://places-72147.firebaseio.com/places/"+ key +".json", {
-            method:"DELETE"
-        })
-        .catch(err => {
-            alert("Something went wrong, sorry :/");
-            console.log(err);
-        })
-        .then(res => {
-            res.json()
+//         fetch("https://places-72147.firebaseio.com/places/"+ key +".json", {
+//             method:"DELETE"
+//         })
+//         .catch(err => {
+//             alert("Something went wrong, sorry :/");
+//             console.log(err);
+//         })
+//         .then(res => {
+//             res.json()
             
-            console.log(res.json());
-        })
-        .then(parsedRes => {
-            alert("Place Deleted!");
-        });
+//             console.log(res.json());
+//         })
+//         .then(parsedRes => {
+//             alert("Place Deleted!");
+//         });
        
-    };
-};
+//     };
+// };
 
 
 

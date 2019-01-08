@@ -5,7 +5,7 @@ import App from '../../App';
 import {authLogOut} from '../store/actions/index';
 import SharePlaceScreen from './SharePlaceScreen';
 import { connect } from 'react-redux';
-import logo from '../assets/logoPng.png';
+import logo from '../assets/logo.png';
 class SideDrawerScreen extends Component {
  
     render(){
@@ -15,7 +15,7 @@ class SideDrawerScreen extends Component {
             
                 <View style={styles.headerContainer}>
                 <View>
-                    <Image resizeMode="cover" source={logo} style={styles.logo}/>
+                    <Image source={logo} style={styles.logo}/>
                     <Text style={styles.sideDrawerHeader}>Beautiful Places</Text>
 
                </View>
